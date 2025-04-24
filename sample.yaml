@@ -15,7 +15,7 @@
     - name: Install WebServer on the Host Machines 
       action: yum pkg=httpd state=present 
     - name: Install Docker on the Host Machines 
-      action: yum pkg=docker state=present 
+      action: yum pkg=docke state=present 
     - name: Start Httpd WebServer on the host Machines 
       action: service name=httpd state=started 
     - name: Start Docker Server on the Host Machines
