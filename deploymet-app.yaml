@@ -1,0 +1,12 @@
+--- 
+- hosts: webservers 
+  user: ansible 
+  connection: yes 
+  become: yes 
+  tasks: 
+    - name: Install the httpd server on hosts 
+      action: yum pkg=httpd state=latest 
+    - name: Start Httpd WebServer on the Hosts 
+      action: service name=httpd state=started 
+    - name: Copy the source code from local to inside the webserver default Directory 
+      copy: src=/home/ansible/Ansible-Scripts/Coursevita-Retail-Project/ dest=/var/www/html 
