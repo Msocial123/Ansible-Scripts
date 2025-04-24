@@ -1,0 +1,23 @@
+--- 
+- hosts: webservers 
+  user: ansible 
+  connection: ssh 
+  become: yes 
+  tasks:
+    - name: Install Git on the Host Machines
+      action: yum pkg=git state=latest 
+    - name: Install Java on Host Machines 
+      action: yum pkg=java state=latest 
+    - name: Install Mysql Server on the Host Machines 
+      action: yum pkg=mysql state=present 
+    - name: Install Python on the Host Machines 
+      action: yum pkg=python state=present 
+    - name: Install WebServer on the Host Machines 
+      action: yum pkg=httpd state=present 
+    - name: Install Docker on the Host Machines 
+      action: yum pkg=docker state=present 
+    - name: Start Httpd WebServer on the host Machines 
+      action: service name=httpd state=started 
+    - name: Start Docker Server on the Host Machines
+      action: service name=docker state=started               
+      
