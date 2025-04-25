@@ -7,7 +7,6 @@
 
   vars:
     httpd_port: 8080
-    server_name: "example.com"
 
   tasks:
   - name: Install httpd and dependencies
@@ -35,9 +34,9 @@
       enabled: yes
 
   - name: Configure httpd
-    template:
-      src: templates/httpd.conf.j2
-      dest: /etc/httpd/conf/httpd.conf
+    copy:
+      content: "Listen {{ httpd_port }}\n"
+      dest: /etc/httpd/conf.d/port.conf
     notify: Restart httpd
 
   - name: Allow httpd port in firewall
