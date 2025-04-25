@@ -1,0 +1,30 @@
+---
+- name: Install and Configure httpd Server
+  hosts: webservers
+  remote_user: ansible
+  connection: ssh
+  become: yes
+
+  tasks:
+  - name: Install httpd
+    yum:
+      name: httpd
+      state: present
+
+  - name: Start and Enable httpd
+    service:
+      name: httpd
+      state: started
+      enabled: yes
+
+  - name: Change httpd port to 8080
+    template:
+      src: templates/httpd.conf.j2
+      dest: /etc/httpd/conf/httpd.conf
+    notify: Restart httpd
+
+  handlers:
+  - name: Restart httpd
+    service:
+      name: httpd
+      state: restarted
