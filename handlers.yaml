@@ -1,18 +1,38 @@
 ---
-- hosts: webservers
+- name: Install and Configure Docker
+  hosts: webservers
   remote_user: ansible
-  become: yes
   connection: ssh
+  become: yes
 
   tasks:
-  - name: Install HTTPD server on centos 7
+  - name: Install Docker
     yum:
-      name: httpd
+      name:
+        - docker
       state: present
-    notify: restart HTTPD
+
+  - name: Start and Enable Docker
+    service:
+      name: docker
+      state: started
+      enabled: yes
+
+  - name: Pull Docker image
+    docker_image:
+      name: nginx
+      source: pull
+
+  - name: Run Docker container
+    docker_container:
+      name: my_nginx
+      image: nginx
+      state: started
+      ports:
+        - "8080:80"
 
   handlers:
-  - name: restart HTTPD
+  - name: Restart Docker
     service:
-      name: httpd
+      name: docker
       state: restarted
