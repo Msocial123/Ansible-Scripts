@@ -1,63 +1,18 @@
 ---
-- name: Install and Configure httpd Server
-  hosts: webservers
+- hosts: demo
   remote_user: ansible
-  connection: ssh
   become: yes
-
-  vars:
-    httpd_port: 8080
+  connection: ssh
 
   tasks:
-  - name: Install httpd and dependencies
+  - name: Install HTTPD server on centos 7
     yum:
-      name:
-        - httpd
-        - libselinux-python
-      state: present
-
-  - name: Disable SELinux
-    selinux:
-      state: disabled
-
-  - name: Install firewalld
-    yum:
-      name:
-        - firewalld
-        - python-firewall
-      state: present
-
-  - name: Start and Enable firewalld
-    service:
-      name: firewalld
-      state: started
-      enabled: yes
-
-  - name: Configure httpd
-    copy:
-      content: "Listen {{ httpd_port }}\n"
-      dest: /etc/httpd/conf.d/port.conf
-    notify: Restart httpd
-
-  - name: Allow httpd port in firewall
-    firewalld:
-      port: "{{ httpd_port }}/tcp"
-      permanent: yes
-      state: enabled
-
-  - name: Reload firewalld
-    service:
-      name: firewalld
-      state: reloaded
-
-  - name: Start and Enable httpd
-    service:
       name: httpd
-      state: started
-      enabled: yes
+      state: present
+    notify: restart HTTPD
 
   handlers:
-  - name: Restart httpd
+  - name: restart HTTPD
     service:
       name: httpd
       state: restarted
