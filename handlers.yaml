@@ -5,6 +5,10 @@
   connection: ssh
   become: yes
 
+  vars:
+    httpd_port: 8080
+    server_name: "example.com"
+
   tasks:
   - name: Install httpd
     yum:
@@ -17,7 +21,7 @@
       state: started
       enabled: yes
 
-  - name: Change httpd port to 8080
+  - name: Configure httpd
     template:
       src: templates/httpd.conf.j2
       dest: /etc/httpd/conf/httpd.conf
