@@ -27,6 +27,10 @@
       state: started
       enabled: yes
 
+  - name: Disable SELinux
+    selinux:
+      state: disabled
+
   - name: Pull Docker image
     docker_image:
       name: nginx
@@ -38,7 +42,7 @@
       image: nginx
       state: started
       ports:
-        - "8080:80"
+        - "8081:80"
 
   handlers:
   - name: Restart Docker
