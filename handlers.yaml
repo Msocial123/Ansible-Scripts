@@ -10,9 +10,11 @@
     server_name: "example.com"
 
   tasks:
-  - name: Install httpd
+  - name: Install httpd and dependencies
     yum:
-      name: httpd
+      name:
+        - httpd
+        - libselinux-python
       state: present
 
   - name: Disable SELinux
