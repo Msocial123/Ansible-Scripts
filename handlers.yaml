@@ -15,11 +15,26 @@
       name: httpd
       state: present
 
+  - name: Disable SELinux
+    selinux:
+      state: disabled
+
   - name: Configure httpd
     template:
       src: templates/httpd.conf.j2
       dest: /etc/httpd/conf/httpd.conf
     notify: Restart httpd
+
+  - name: Allow httpd port in firewall
+    firewalld:
+      port: "{{ httpd_port }}/tcp"
+      permanent: yes
+      state: enabled
+
+  - name: Reload firewalld
+    service:
+      name: firewalld
+      state: reloaded
 
   - name: Start and Enable httpd
     service:
