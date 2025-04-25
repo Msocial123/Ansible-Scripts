@@ -27,6 +27,15 @@
       dest: /etc/httpd/conf/httpd.conf
     notify: Restart httpd
 
+  - name: Check httpd service status
+    command: systemctl status httpd.service
+    ignore_errors: yes
+    register: httpd_status
+
+  - name: Print httpd service status
+    debug:
+      msg: "{{ httpd_status.stdout }}"
+
   handlers:
   - name: Restart httpd
     service:
