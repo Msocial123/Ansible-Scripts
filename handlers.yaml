@@ -6,14 +6,11 @@
   become: yes
 
   tasks:
-  - name: Install Docker
+  - name: Install Docker and dependencies
     yum:
-      name: docker
-      state: present
-
-  - name: Install python-pip
-    yum:
-      name: python-pip
+      name:
+        - docker
+        - python-pip
       state: present
 
   - name: Install docker-py
@@ -26,23 +23,7 @@
       name: docker
       state: started
       enabled: yes
-
-  - name: Disable SELinux
-    selinux:
-      state: disabled
-
-  - name: Pull Docker image
-    docker_image:
-      name: nginx
-      source: pull
-
-  - name: Run Docker container
-    docker_container:
-      name: my_nginx
-      image: nginx
-      state: started
-      ports:
-        - "8081:80"
+    notify: Restart Docker
 
   handlers:
   - name: Restart Docker
