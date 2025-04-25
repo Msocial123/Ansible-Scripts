@@ -1,5 +1,5 @@
 ---
-- hosts: demo
+- hosts: webservers
   remote_user: ansible
   become: yes
   connection: ssh
