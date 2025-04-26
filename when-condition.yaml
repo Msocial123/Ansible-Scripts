@@ -1,6 +1,6 @@
 ---
 - name: Install Git, Python, and Java if not installed
-  hosts: webserver
+  hosts: webservers
   user: ansible
   connection: ssh
   become: yes
