@@ -1,6 +1,6 @@
 ---
 - name: Install Git, Python, and Java if not installed (Amazon Linux)
-  hosts: webserver
+  hosts: webservers
   remote_user: ansible
   connection: ssh
   become: yes
